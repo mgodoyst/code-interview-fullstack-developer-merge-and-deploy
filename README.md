@@ -16,7 +16,7 @@ Desarrollar una aplicación que permita validar un documento tipo RUT, utilizand
 
 ### **Ejercicio 1: Crear API con NestJS**
 
-1. Crea un controlador con dos endpoints:
+1. Crea un controlador (endpoint):
     - `POST /api/validation` Debe retornar un valor booleano.
 2. Implementa un servicio para manejar la lógica de la validación según lo siguiente:
 
