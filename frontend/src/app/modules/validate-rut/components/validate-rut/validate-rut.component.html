@@ -1,0 +1,6 @@
+<form class="h-screen w-screen bg-slate-200 flex justify-center items-center flex-col gap-1" (ngSubmit)="validate()">
+
+  <label>Ingrese el Rut</label>
+  <input type="text" class="px-2 py-1 focus:outline-none" [(ngModel)]="rut"  [ngModelOptions]="{standalone: true}">
+  <button type="submit" class="px-2 py-1 bg-red-500 rounded text-white">Validar</button>
+</form>
