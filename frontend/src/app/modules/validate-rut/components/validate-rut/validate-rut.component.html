@@ -1,14 +1,15 @@
-<form class="h-screen w-screen bg-slate-200 flex justify-center items-center flex-col gap-1" (ngSubmit)="validate()">
+<form class="h-screen w-screen bg-slate-200 flex justify-center items-center flex-col gap-4" (ngSubmit)="validate()"
+  [formGroup]="form">
 
   <h2 class="text-center font-semibold uppercase">Validación de rut</h2>
 
   <label>Ingrese el Rut</label>
   <div class="d-flex">
-    <input type="text" class="px-2 py-1 focus:outline-none w-10/12" [(ngModel)]="rut"
-      [ngModelOptions]="{standalone: true}" maxlength="8">
+    <input type="text" class="px-2 py-1 focus:outline-none w-10/12 tracking-widest font-semibold text-center"
+      formControlName="rut" maxlength="8">
     <span class="w-1/12 px-1">-</span>
-    <input type="text" class="px-2 py-1 focus:outline-none w-1/12" [(ngModel)]="validatorDigit"
-      [ngModelOptions]="{standalone: true}" maxlength="1">
+    <input type="text" class="px-2 py-1 focus:outline-none w-1/12 font-semibold" formControlName="validatorDigit"
+      maxlength="1">
   </div>
   <button type="submit"
     class="w-28 py-1 bg-green-600 hover:bg-green-500 duration-300 rounded text-white ">Validar</button>
