@@ -1,4 +1,5 @@
 export class ValidateRut {
   rut!: string
-  result?: string
+  result?: boolean
+  validatorDigit!: string
 }

@@ -15,7 +15,6 @@ export class RutService {
 
         let calculationResult: number | undefined = 0
 
-
         reverseRut.forEach(str => {
 
             const number: number = parseInt(str);
@@ -27,14 +26,9 @@ export class RutService {
             else indexM += 1
         })
 
-        console.log(calculationResult % 11)
-
         calculationResult = 11 - (calculationResult % 11)
 
-
-        if (calculationResult == 11)
-            dto.result = "K"
-        else if (calculationResult == 10) dto.result = "0"
+        dto.result = dto.validatorDigit == calculationResult
 
         return dto;
     }
