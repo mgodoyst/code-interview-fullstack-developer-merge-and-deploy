@@ -54,3 +54,12 @@ Desarrollar una aplicación que permita validar un documento tipo RUT, utilizand
 - Desplegar en un ambiente cloud.
 
 ## ¡Buena suerte!
+
+
+# Entrega
+
+## FRONTEND APP
+https://validaterut-mgodoy.netlify.app/
+
+## BACKEND APP 
+https://validate-rut.vercel.app/
