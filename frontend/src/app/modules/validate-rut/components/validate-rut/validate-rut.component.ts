@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ValidateRutService } from '../../../../services/validate-rut.service';
 import { ValidateRut } from '../../../../models/validate-rut.model';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-validate-rut',
@@ -22,27 +22,32 @@ export class ValidateRutComponent {
 
   initForm() {
     this.form = this.fb.group({
-      rut: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(8)]],
-      validatorDigit: ["", [Validators.required, Validators.maxLength(1)]]
+      rut: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(8), Validators.pattern(/^\d+$/)]],
+      validatorDigit: ["", [Validators.required, Validators.maxLength(1), Validators.pattern(/^[\dKk]$/)]]
     })
-    this.subscribeToFieldChanges()
   }
 
   validate() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAsDirty()
+    }
 
     const validateRut: ValidateRut = this.form.value
 
     this.validateRutService.validate(validateRut)
-      .subscribe(data => {
-        this.toast(data.result ? "Válido" : "Inválido", data.result)
+      .subscribe({
+        next: (data) => {
+          this.toast(data.result ? "Documento válido" : "Documento inválido", !data.result)
+        },
+        error: (error) =>
+          this.toast(error.error.message[0] || "Ocurrio un error", true)
       })
   }
 
   toast(message: string, isError: boolean = false) {
-    if (isError)
-      this.toastr.success(message, '', { positionClass: 'toast-bottom-center' });
-    else this.toastr.error(message, '', { positionClass: 'toast-bottom-center' })
+    if (!isError)
+      this.toastr.success(message, "", { positionClass: 'toast-bottom-center' });
+    else this.toastr.error(message, "", { positionClass: 'toast-bottom-center' })
   }
 
   get rutField() {
@@ -53,11 +58,9 @@ export class ValidateRutComponent {
     return this.form.get("validatorDigit")
   }
 
-  subscribeToFieldChanges() {
-    this.rutField?.valueChanges.subscribe((value: string) =>
-      this.rutField?.patchValue(value.replace(/\D/g, '')))
-
-    this.validatorDigitField?.valueChanges.subscribe((value: string) =>
-      this.validatorDigitField?.patchValue(value.replace(/[^0-9kK]/g, '')));
+  getValidationStyle(path: string) {
+    const control: AbstractControl | null = this.form.get(path);
+    const isValid: boolean = control?.valid || !control?.dirty;
+    return isValid ? '' : 'shadow shadow-red-400'
   }
 }

@@ -28,7 +28,12 @@ export class RutService {
 
         calculationResult = 11 - (calculationResult % 11)
 
-        dto.result = dto.validatorDigit == calculationResult
+        if (dto.validatorDigit == "K")
+            dto.validatorDigit = "10"
+        else if (dto.validatorDigit == "0")
+            dto.validatorDigit = "11"
+
+        dto.result = parseInt(dto.validatorDigit) == calculationResult
 
         return dto;
     }
